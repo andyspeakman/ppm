@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-1">
+        <createTable tableName="audit">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="date_time" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="action" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="user" type="TINYINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subject" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-2">
+        <createTable tableName="contractor">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValueNumeric="0" name="contractor_type" type="TINYINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="company_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="website" type="VARCHAR(100)"/>
+            <column name="company_telno" type="VARCHAR(20)"/>
+            <column name="contact_name" type="VARCHAR(50)"/>
+            <column name="contact_telno" type="VARCHAR(20)"/>
+            <column defaultValueNumeric="0" name="added_by" type="TINYINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="notes" type="VARCHAR(200)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-3">
+        <createTable tableName="contractor_type">
+            <column autoIncrement="true" name="id" type="TINYINT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValue="" name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-4">
+        <createTable tableName="document">
+            <column autoIncrement="true" name="id" remarks="Unique ID of document." type="SMALLINT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="doc_type" remarks="Foreign key to DOCUMENT_TYPE." type="TINYINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="date_time" remarks="Timestamp when the document was added to the database" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="doc_date" remarks="Date that the document was created." type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" remarks="Title of the document" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="path" remarks="Path to the document on the server, from the root." type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="size" remarks="Size of the document, in KB." type="SMALLINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-5">
+        <createTable tableName="document_type">
+            <column name="id" type="TINYINT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="folder" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="admin, director" name="groups" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-6">
+        <createTable tableName="flat">
+            <column name="id" remarks="Identifier of a flat - its flat number." type="VARCHAR(3)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="display_order" remarks="Numerical order of flat (taking into account A, B, etc)." type="TINYINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="communal_hot_water" remarks="Y/N flag indicating whether the flat uses communal hot water" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" remarks="Foreign key to FLAT_TYPE" type="TINYINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-7">
+        <createTable tableName="flat_resident">
+            <column name="flat" remarks="Foreign key to FLAT." type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="resident" remarks="Foreign key to RESIDENT." type="TINYINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" remarks="Foreign key to RESIDENT_STATUS." type="TINYINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-8">
+        <createTable tableName="flat_status">
+            <column autoIncrement="true" name="id" remarks="Unique ID of type, used as primary key." type="TINYINT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" remarks="Description of type." type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-9">
+        <createTable tableName="message">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValue="" name="title" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="notes" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="date_added" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="added_by" type="TINYINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_expires" type="DATE"/>
+            <column defaultValue="N" name="expired" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-10">
+        <createTable tableName="resident">
+            <column autoIncrement="true" name="id" remarks="Unique ID of resident, used as primary key." type="TINYINT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" remarks="Full name of resident." type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="Y" name="e_contact" remarks="Y/N flag indicating if the resident is happy to receive information via email." type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" remarks="Email address of resident." type="VARCHAR(50)"/>
+            <column name="password" remarks="Residents password, stored in plain text (used if they have a site login)." type="VARCHAR(50)"/>
+            <column name="role" remarks="Residents role (used if they have a site login)." type="VARCHAR(15)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-11">
+        <createTable tableName="resident_status">
+            <column autoIncrement="true" name="id" remarks="Unique ID of status, used as primary key." type="TINYINT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" remarks="Description of status, e.g. Tenant, Owner, etc." type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-12">
+        <createTable tableName="task">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="title" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="priority" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="notes" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="date_added" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_requested" type="DATE"/>
+            <column name="added_by" type="TINYINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="requested_by" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="assigned_to" type="TINYINT UNSIGNED"/>
+            <column name="date_completed" type="DATE"/>
+            <column name="effort" type="INT UNSIGNED"/>
+            <column name="cost" type="DECIMAL(8,2)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-13">
+        <createTable tableName="work_record">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="work_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="notes" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hours" type="TINYINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="added_by" type="TINYINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-14">
+        <addPrimaryKey columnNames="flat, resident" tableName="flat_resident"/>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-15">
+        <createIndex indexName="fk_audit_resident" tableName="audit" unique="false">
+            <column name="user"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-16">
+        <createIndex indexName="fk_cont_resident" tableName="contractor" unique="false">
+            <column name="added_by"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-17">
+        <createIndex indexName="fk_cont_type" tableName="contractor" unique="false">
+            <column name="contractor_type"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-18">
+        <createIndex indexName="fk_doc_type" tableName="document" unique="false">
+            <column name="doc_type"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-19">
+        <createIndex indexName="fk_flat_status" tableName="flat" unique="false">
+            <column name="status"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-20">
+        <createIndex indexName="fk_fr_res" tableName="flat_resident" unique="false">
+            <column name="resident"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-21">
+        <createIndex indexName="fk_fr_status" tableName="flat_resident" unique="false">
+            <column name="status"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-22">
+        <createIndex indexName="fk_msg_resident" tableName="message" unique="false">
+            <column name="added_by"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-23">
+        <createIndex indexName="fk_task_added_resident" tableName="task" unique="false">
+            <column name="added_by"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-24">
+        <createIndex indexName="fk_task_assign_resident" tableName="task" unique="false">
+            <column name="assigned_to"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-25">
+        <createIndex indexName="fk_wr_resident" tableName="work_record" unique="false">
+            <column name="added_by"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="andrewspeakman (generated)" id="1324491015844-26">
+        <createView viewName="users">/* ALGORITHM=UNDEFINED */ select `r`.`id` AS `id`,`r`.`name` AS `name`,`r`.`email` AS `email`,`r`.`password` AS `password`,`r`.`role` AS `role`,`fr`.`flat` AS `flat` from (`princes_ppm`.`resident` `r` join `princes_ppm`.`flat_resident` `fr` on((`r`.`id` = `fr`.`resident`))) where (`r`.`role` is not null)</createView>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,44 @@
+/* Styles for paginator control: */
+
+div.pagination-control {
+   border: 1pt solid #444444;
+   margin: 1em 0;
+   padding: 0.5em;
+   font-variant: small-caps;
+   letter-spacing: 0.1em;
+   font-size: 0.9em;
+}
+
+div.pagination-control a, div.paginationControl a:hover {
+   color: #444444;
+   border-bottom: none;
+}
+
+div.pagination-control .currentpage {
+   color: black;
+   font-weight: bold;
+   font-size: 1.1em;
+}
+
+div.pagination-control .paging-information {
+   color: #444444;
+   margin-left: 1em;
+}
+
+div.pagination-control .page-numbers {
+   letter-spacing: 0.5em;
+}
+
+div.pagination-control a.next {
+   background-image: url(/images/icons/16/next.png);
+   background-repeat: no-repeat;
+   background-position: right center;
+   padding-right: 18px;
+}
+
+div.pagination-control a.previous {
+   background-image: url(/images/icons/16/previous.png);
+   background-repeat: no-repeat;
+   background-position: left center;
+   padding-left: 18px;
+}

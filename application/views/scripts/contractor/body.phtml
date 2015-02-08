@@ -1,0 +1,121 @@
+<form enctype="application/x-www-form-urlencoded" method="post"
+    action="<?= $this->form->getAction(); ?>" 
+    class="form-horizontal"
+    novalidate>
+
+<fieldset>
+   <input type="hidden" name="id" value="<?= $this->form->getValue('id'); ?>" id="id" />
+   
+    <div class="control-group <? if ($this->form->contractor_type->hasErrors()) echo 'error'; ?>">
+        <label for="contractor_type" class="control-label">Category:</label>
+        <div class="controls">
+            <select name="contractor_type" id="contractor_type" autofocus>
+              <?php
+                 foreach ($this->contractorTypes as $id => $value) {
+                    if ($id == $this->form->getValue('contractor_type')) {
+                       echo '<option selected value="' . $id . '">' . $value . '</option>';
+                    } else {
+                       echo '<option value="' . $id . '">' . $value . '</option>';
+                    }
+                 }
+              ?>
+            </select>
+            <?php
+            foreach ($this->form->contractor_type->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+            <p class="help-block"><?= $this->form->contractor_type->getDescription() ?></p>
+        </div>
+   </div>
+
+    <div class="control-group <? if ($this->form->company_name->hasErrors()) echo 'error'; ?>">
+        <label for="company_name" class="control-label">Company Name:</label>
+        <div class="controls">
+            <input type="text" name="company_name" id="company_name" size="30" maxlength="50" required
+                value="<?= $this->form->getValue('company_name'); ?>" />
+            <?php
+            foreach ($this->form->company_name->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+            <p class="help-block"><?= $this->form->company_name->getDescription() ?></p>
+        </div>
+   </div>
+
+    <div class="control-group <? if ($this->form->website->hasErrors()) echo 'error'; ?>">
+        <label for="website" class="control-label">Website:</label>
+        <div class="controls">
+            <input type="url" name="website" id="website" size="30" maxlength="100"
+                value="<?= $this->form->getValue('website'); ?>" />
+            <?php
+            foreach ($this->form->website->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+            <p class="help-block"><?= $this->form->website->getDescription() ?></p>
+        </div>
+   </div>
+
+    <div class="control-group <? if ($this->form->company_telno->hasErrors()) echo 'error'; ?>">
+        <label for="company_telno" class="control-label">Company Tel.:</label>
+        <div class="controls">
+            <input type="text" name="company_telno" id="company_telno" size="20" maxlength="20"
+                required value="<?= $this->form->getValue('company_telno'); ?>" />
+            <?php
+            foreach ($this->form->company_telno->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+            <p class="help-block"><?= $this->form->company_telno->getDescription() ?></p>
+        </div>
+   </div>
+
+    <div class="control-group <? if ($this->form->contact_name->hasErrors()) echo 'error'; ?>">
+        <label for="contact_name" class="control-label">Contact Name:</label>
+        <div class="controls">
+            <input type="text" name="contact_name" id="contact_name" size="30" maxlength="50"
+                value="<?= $this->form->getValue('contact_name'); ?>" />
+            <?php
+            foreach ($this->form->contact_name->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+            <p class="help-block"><?= $this->form->contact_name->getDescription() ?></p>
+        </div>
+   </div>
+
+    <div class="control-group <? if ($this->form->contact_telno->hasErrors()) echo 'error'; ?>">
+        <label for="contact_telno" class="control-label">Contact Tel.:</label>
+        <div class="controls">
+            <input type="text" name="contact_telno" id="contact_telno" size="20" maxlength="20"
+                value="<?= $this->form->getValue('contact_telno'); ?>" />
+            <?php
+            foreach ($this->form->contact_telno->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+            <p class="help-block"><?= $this->form->contact_telno->getDescription() ?></p>
+        </div>
+   </div>
+
+    <div class="control-group <? if ($this->form->notes->hasErrors()) echo 'error'; ?>">
+        <label for="notes" class="control-label">Notes:</label>
+        <div class="controls">
+            <textarea name="notes" id="notes" rows="5" cols="50"><?= $this->form->getValue('notes'); ?></textarea>
+            <?php
+            foreach ($this->form->notes->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+            <p class="help-block"><?= $this->form->notes->getDescription() ?></p>
+        </div>
+   </div>
+   
+   <div class="form-actions">
+      <input type="submit" name="submit" id="submit" value="Save" class="btn btn-primary" />
+      <input type="button" name="cancel" id="cancel" value="Cancel" onclick="location.href='/contractor';" class="btn" />
+   </div>
+
+</fieldset>
+</form>

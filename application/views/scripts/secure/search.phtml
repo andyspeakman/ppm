@@ -1,0 +1,19 @@
+<? $this->headTitle('Search'); ?>
+
+<a name="top"></a><h1>Site Search</h1>
+
+<h2>Search</h2>
+
+<p>Please use the Google-powered search box below to search for content on the site.</p>
+
+<!-- Google Custom Search Element -->
+<div id="cse" style="width:100%;">Loading</div>
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script type="text/javascript">
+  google.load('search', '1');
+  google.setOnLoadCallback(function(){
+    new google.search.CustomSearchControl().draw('cse');
+  }, true);
+</script>
+
+<a href="#top" title="Return to the top of the page" class="page_nav"><i class="icon-arrow-up"></i>Back To Top</a>

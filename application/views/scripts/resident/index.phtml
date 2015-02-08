@@ -1,0 +1,119 @@
+<?
+    $this->headTitle('Resident List');
+    $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0');
+?>
+
+<?
+$ppm_session = new Zend_Session_Namespace('ppm');
+$registry = Zend_Registry::getInstance();
+$acl = $registry->acl;
+$u = $ppm_session->user;
+?>
+
+<h1>Resident List</h1>
+
+<p>If you notice any errors in the list, please email them to
+<a class="maillink" href="mailto:princesparkmansions@yahoo.co.uk">princesparkmansions@yahoo.co.uk</a></p>
+
+<? if ($acl->isAllowed($u->getRole(), 'resident', 'add')): ?>
+<button name="addResident" class="btn btn-mini"
+   onclick="javascript:document.location='/resident/add'">Add Resident...</button>
+<? endif; ?>
+
+<style>
+@media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+    /* Force table to not be like tables anymore */
+    table, thead, tbody, th, td, tr { 
+        display: block; 
+    }
+    
+    /* Hide table headers (but not display: none;, for accessibility) */
+    thead tr { 
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    
+    tr {
+        border: 1px solid #ccc;
+        margin-bottom: 1em;
+    }
+    
+    td { 
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee; 
+        position: relative;
+        padding-left: 50%; 
+    }
+    
+    td:before { 
+        /* Now like a table header */
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%; 
+        padding-right: 10px; 
+        white-space: nowrap;
+        font-weight: bold;
+    }
+    
+    /*
+    Label the data
+    */
+    td:nth-of-type(1):before { content: "Flat:"; }
+    td:nth-of-type(2):before { content: "Name:"; }
+    td:nth-of-type(3):before { content: "Status:"; }
+    td:nth-of-type(4):before { content: "Role:"; }
+    td:nth-of-type(5):before { content: "Email:"; }
+}
+</style>
+
+<table class="table table-striped table-condensed list">
+    <thead>
+    <tr>
+        <th>Flat</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Role</th>
+        <th>Email</th>
+        <th></th>
+    </tr>
+    </thead>
+
+<!-- Loop through the entries that were provided to us by the controller -->
+<?php foreach ($this->entries as $entry):?>
+        <tr>
+            <td><?php echo $this->escape($entry['flatno']) ?></td>
+            <td><?php echo $this->escape($entry['resident_name']) ?></td>
+            <td><?php echo $this->escape($entry['resident_status']) ?></td>
+            <td><?php echo $this->escape(ucwords($entry['role'])) ?></td>
+            <td>
+                <? if ($entry['email']): ?>
+                    <a href="mailto:<?php echo $this->escape($entry['email']) ?>" class="maillink">
+                    <?php echo $this->escape($entry['email']) ?>
+                    </a>
+                <? endif; ?>
+            </td>
+            <td>
+            <? if ($entry['resident_id'] && $acl->isAllowed($u->getRole(), 'resident', 'delete')): ?>
+                <a class="btn btn-mini"
+                    name="editResident"
+                    href="<?= $this->url(array('controller' => 'resident', 'action' => 'edit', 'id' => $entry['resident_id'])) ?>">Edit</a>
+            <? endif; ?>
+
+            <? if ($entry['resident_id'] && $acl->isAllowed($u->getRole(), 'resident', 'delete')): ?>
+                <a class="btn btn-danger btn-mini"
+                    name="deleteResident"
+                    href="<?= $this->url(array('controller' => 'resident', 'action' => 'delete', 'id' => $entry['resident_id'], 'name' => $entry['resident_name'])) ?>">Delete</a>
+            <? endif; ?>
+            </td>
+        </tr>
+   
+<?php endforeach;?>
+    </table>
+
+<a href="#top" title="Return to the top of the page" class="page_nav"><i class="icon-arrow-up"></i>Back To Top</a>
+<p>&nbsp;</p>

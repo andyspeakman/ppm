@@ -1,0 +1,157 @@
+<?= $this->doctype() ?>
+<html lang="en">
+ 
+<head>
+    <meta charset="utf-8" /> 
+    <?  $this->headLink()->appendStylesheet('/css/bootstrap-2.3.2.css');
+    echo $this->headLink();
+    
+    $this->headTitle()->prepend('Princes Park Mansions');
+    $this->headTitle()->setSeparator(' - ');
+    echo $this->headTitle();
+    
+    $this->headMeta()->appendName('keywords', 'princes park mansions, princes park liverpool, princes park mansions liverpool, georgian buildings liverpool');
+    $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0');
+    echo $this->headMeta();
+    
+    $this->headScript()->prependFile('/js/bootstrap-dropdown.js', 'text/javascript');
+    $this->headScript()->prependFile('/js/bootstrap-collapse.js', 'text/javascript');
+    $this->headScript()->prependFile('/js/jquery-1.7.2.min.js', 'text/javascript');
+    echo $this->headScript() ?>
+      
+    <?php if (getenv('APPLICATION_ENVIRONMENT') == 'production'): ?>
+        <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+        </script>
+        <script type="text/javascript">
+            _uacct = "UA-2014125-1";
+            urchinTracker();
+        </script>
+    <?php endif; ?>
+</head>
+
+<body>
+
+
+<!-- Nav content: -->
+
+<?php
+$ppm_session = new Zend_Session_Namespace('ppm');
+$registry = Zend_Registry::getInstance();
+$acl = $registry->acl;
+
+if (isset($ppm_session->user)) {
+   $u = $ppm_session->user;
+}
+?>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">Home</a>
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+
+            <ul class="nav">
+            <?php if (isset($u)): ?>
+                <li><a href="/index/logoff">Log Out</a></li>
+            <?php else: ?>
+                <li><a href="/index/login">Log In</a></li>
+            <?php endif; ?>
+            </ul>
+
+<?php if (isset($u)): ?>
+
+            <div class="nav-collapse collapse">
+            <ul class="nav">
+                <li class="dropdown" id="menu1">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
+                        Public Menu
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/index/history">History</a></li>
+                        <li><a href="/index/gallery">Gallery</a></li>
+                        <li><a href="/index/caretaker">Caretaker</a></li>
+                        <li><a href="/index/ppmmcl">Management Company</a></li>
+                        <li><a href="/index/regulations">Regulations</a></li>
+                    </ul>
+                </li>
+
+                <?php if ($acl->isAllowed($u->getRole(), 'message', 'index')): ?>
+                    <li><a href="/message">Noticeboard</a></li>
+                <?php endif; ?>
+                <?php if ($acl->isAllowed($u->getRole(), 'document', 'index')): ?>
+                    <li><a href="/document">Documents</a></li>
+                <?php endif; ?>
+                <li class="dropdown" id="menu2">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu2">
+                        Resident
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <?php if ($acl->isAllowed($u->getRole(), 'resident', 'index')): ?>
+                            <li><a href="/resident">Resident List</a></li>
+                        <?php endif; ?>
+                        <?php if ($acl->isAllowed($u->getRole(), 'car', 'index')): ?>
+                            <li><a href="/car">Vehicle List</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <?php if ($acl->isAllowed($u->getRole(), 'contractor', 'index')): ?>
+                    <li><a href="/contractor">Contractors</a></li>
+                <?php endif; ?>
+                <!-- 
+                <?php if ($acl->isAllowed($u->getRole(), 'task', 'index')): ?>
+                    <li><a href="/task">Tasks</a></li>
+                <?php endif; ?>
+                <?php if ($acl->isAllowed($u->getRole(), 'audit', 'list')): ?>
+                    <li><a href="/audit">Audit</a></li>
+                <?php endif; ?>
+                 -->
+                <li><a href="/secure/changepassword">Change Password</a></li>
+            </ul>
+
+<?php else: ?>
+
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li><a href="/index/history">History</a></li>
+                    <li><a href="/index/gallery">Gallery</a></li>
+                    <li><a href="/index/caretaker">Caretaker</a></li>
+                    <li><a href="/index/ppmmcl">Management Company</a></li>
+                    <li><a href="/index/regulations">Regulations</a></li>
+                    <li><a href="/index/contact">Contact Us</a></li>
+                </ul>
+            </div>
+
+<?php endif; ?>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- This next call will now include any content that was generated in the
+     dispatching of a controllers action (or series of actions).  -->
+
+<div class="container">
+<?= $this->layout()->content ?>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function($){
+        // Get current url
+        // Select an a element that has the matching href and apply a class of 'active'.
+        // Also prepend a - to the content of the link
+        var url = window.location.pathname;
+        $('li a[href="'+url+'"]').parent().addClass('active');
+
+        $('.dropdown-toggle').dropdown()
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<? // application/views/scripts/audit/index.phtml
+   $this->headTitle('Log In'); ?>
+
+<h1>Log In</h1>
+
+<p>Please note that passwords are case-sensitive</p>
+
+<form enctype="application/x-www-form-urlencoded"
+    method="post" action="<?= $this->form->getAction(); ?>"
+    class="form-horizontal"
+    novalidate>
+
+<fieldset>
+    <div class="control-group <? if ($this->form->email->hasErrors()) echo 'error'; ?>">
+        <label for="email" class="control-label">Your email address:</label>
+        <div class="controls">
+            <input type="email" name="email" id="email" size="30" maxlength="50" autofocus required
+                value="<?= $this->form->getValue('email'); ?>" />
+            <?php
+            foreach ($this->form->email->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+        </div>
+    </div>
+
+    <div class="control-group <? if ($this->form->password->hasErrors()) echo 'error'; ?>">
+        <label for="password" class="control-label">Password:</label>
+        <div class="controls">
+            <input type="password" name="password" id="password" size="30" maxlength="50" required
+                value="<?= $this->form->getValue('password'); ?>" />
+            <?php
+            foreach ($this->form->password->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+        </div>
+    </div>
+    
+    <div class="form-actions">
+        <input type="submit" name="submit" id="submit" value="Login" class="btn btn-primary" />
+        <input type="button" name="cancel" id="cancel" value="Cancel" onclick="location.href='/index';" class="btn" />
+    </div>
+
+    <a href="/index/forgottenpassword">Forgotten Password?</a>
+   
+</fieldset>
+</form>

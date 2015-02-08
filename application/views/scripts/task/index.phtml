@@ -1,0 +1,72 @@
+<? $this->headTitle('Tasks'); ?>
+
+<?
+   $ppm_session = new Zend_Session_Namespace('ppm');
+   $registry = Zend_Registry::getInstance();
+   $acl = $registry->acl;
+   $u = $ppm_session->user;
+
+   $this->headLink()->appendStylesheet('/css/paginator.css', 'screen');
+?>
+
+<a name="top"></a>
+<h1>Tasks</h1>
+
+<? if ($acl->isAllowed($u->getRole(), 'task', 'add')): ?>
+<button name="addTask"
+   title="Add a new task" class="btn btn-mini"
+   onclick="javascript:document.location='/task/add'">Add Task...</button>
+<? endif; ?>
+
+<div class="list">
+
+<?php if (count($this->paginator) == 0): ?>
+    <div class="alert alert-warn">
+    <strong>Note:</strong> No tasks found.
+    </div>
+<?php else: ?>
+
+   <table class="colouredgrid">
+      <tr>
+         <th>Priority</th>
+         <th>Title</th>
+         <th>Assigned To</th>
+         <th>Age</th>
+         <th>Actions</th>
+      </tr>
+
+   <!-- Loop through the entries that were provided to us by the controller -->
+   <?php foreach ($this->paginator as $entry):?>
+      <tr <?php echo $this->cycle(array("class=\"oddrow\"", ""))->next()?>>
+         <td><?php echo $this->escape($entry['priority']) ?></td>
+         <td><?php echo $this->escape($entry['title']) ?></td>
+         <td><?php echo $this->escape($entry['name']) ?></td>
+         <td><?php echo $this->escape($entry['age']) ?> days</td>
+         <td>
+         <? if ($acl->isAllowed($u->getRole(), 'task', 'edit')): ?>
+               <a class="action"
+                  name="editTask"
+                  title="Edit this task"
+                  href="<?= $this->url(array('controller' => 'task', 'action' => 'edit', 'id' => $entry['id'])) ?>">Edit</a>
+         <? endif; ?>
+         <? if ($acl->isAllowed($u->getRole(), 'task', 'delete')): ?>
+               <a class="action"
+                  name="deleteTask"
+                  title="Delete this task"
+                  href="<?= $this->url(array('controller' => 'task', 'action' => 'delete', 'id' => $entry['id'])) ?>">Delete</a>
+         <? endif; ?>
+         </td>
+
+      </tr>
+      
+   <?php endforeach;?>
+   
+   </table>
+   
+   <?php echo $this->paginationControl($this->paginator, 'Sliding',  'paginator.phtml'); ?>
+   
+<?php endif; ?>
+
+<br />
+
+</div>

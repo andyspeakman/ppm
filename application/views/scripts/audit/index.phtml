@@ -1,0 +1,21 @@
+<? $this->headTitle('Audit'); ?>
+
+<h1>Audit Entries</h1>
+
+<table class="table table-striped table-condensed">
+    <tr>
+    <th>Date/Time</th>
+    <th>Action</th>
+    <th>Subject</th>
+    <th>User</th>
+    </tr>
+    <!-- Loop through the entries that were provided to us by the controller -->
+    <?php foreach ($this->entries as $entry):?>
+    <tr <?php echo $this->cycle(array("class=\"oddrow\"", ""))->next()?>>
+        <td><?php echo $this->escape($entry['date_time']) ?></td>
+        <td><?php echo $this->escape($entry['action']) ?></td>
+        <td><?php echo $this->escape($entry['subject']) ?></td>
+        <td><?php echo $this->escape($entry['name']) ?></td>
+    </tr>
+<?php endforeach;?>
+</table>

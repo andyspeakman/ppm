@@ -1,0 +1,35 @@
+<? $this->headTitle('Document Centre'); ?>
+
+<?
+$ppm_session = new Zend_Session_Namespace('ppm');
+$registry = Zend_Registry::getInstance();
+$acl = $registry->acl;
+$u = $ppm_session->user;
+?>
+
+<h1>Document Search</h1>
+
+<p>This page contains documents in the Portable Document Format (PDF). The
+software used to allow you to read PDFs is free.  If you do not already have a
+PDF reader, click the icon below.</p>
+
+<div><a href="http://www.adobe.com/products/acrobat/readstep2.html"
+        target="_blank">
+<img src="/images/getacro.gif"
+     alt="Get Acrobat Reader web logo"
+     title="Get Adobe Reader" /></a></div>
+     
+<p>To view the documents, simply click the title.</p>
+
+<select name="doc_type" id="doc_type" onchange="dtypeChanged();">
+   <option value="0">Select...</option>
+<?php
+   foreach ($this->documentTypes as $typ) {
+         echo '<option value="' . $typ['id'] . '">' . $typ['name'] . '</option>';
+   }
+?>
+</select>
+
+<div id="searchresults"></div>
+
+<br />

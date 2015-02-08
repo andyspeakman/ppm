@@ -1,0 +1,14 @@
+
+tmp
+
+ppm.properties
+
+library/Zend
+
+log/access.log
+
+log/development-ppm.log
+
+log/error.log
+
+application/config/config.xml

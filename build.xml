@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+
+<project name="PPM" default="upload.code" basedir=".">
+
+    <property file="ppm.properties"/>
+    <!--
+    <import file="../common.xml"/>
+    -->
+
+    <property name="db.name" value="princes_ppm" />
+    <property name="db.user" value="princes" />
+    <property name="db.pass" value="pr1nc35" />
+    <property name="db.dir" value="database" />
+    
+    <target name="upload.code" description="FTPs PPM site code to the live server.">
+        <ftp server="${remote.server}"
+           remotedir="${remote.dir}"
+           userid="${remote.user}"
+           password="${remote.pass}"
+           depends="yes"
+      	   verbose="yes">
+            <fileset dir="${local.dir}">
+                <include name="**/*.php" />
+                <include name="**/*.phtml" />
+                <include name="**/*.html" />
+                <include name="**/*.css" />
+                <include name="**/*.xml" />
+                <include name="**/*.js" />
+                <exclude name="library/Zend/" />
+                <exclude name="database/" />
+                <exclude name="downloads/" />
+                <exclude name="**/build.xml" />
+            </fileset>
+        </ftp>
+    </target>
+
+    <target name="upload.images" description="FTPs PPM site images to the live server.">
+        <ftp server="${remote.server}"
+           remotedir="${remote.dir}"
+           userid="${remote.user}"
+           password="${remote.pass}"
+           depends="yes"
+           verbose="yes">
+            <fileset dir="${local.dir}">
+                <include name="**/*.png" />
+                <include name="**/*.gif" />
+                <include name="**/*.jpg" />
+                <include name="**/*.ico" />
+            </fileset>
+        </ftp>
+    </target>
+
+   <target name="upload.docs" description="FTPs PPM site PDF documents to the live server.">
+      <ftp server="${remote.server}"
+           remotedir="${remote.dir}"
+           userid="${remote.user}"
+           password="${remote.pass}"
+           depends="yes"
+           verbose="yes">
+         <fileset dir="${local.dir}">
+            <include name="public_html/documents/**/*.pdf" />
+         </fileset>
+      </ftp>
+   </target>
+
+    <target name="upload.htaccess" description="FTPs the Apache control file to the live server.">
+       <ftp server="${remote.server}"
+            remotedir="${remote.dir}"
+            userid="${remote.user}"
+            password="${remote.pass}"
+            depends="yes"
+            verbose="yes">
+          <fileset dir="${local.dir}">
+             <include name="public_html/.htaccess" />
+          </fileset>
+       </ftp>
+    </target>
+
+   <target name="get.logs" description="FTPs logs from the live server.">
+      <ftp server="${remote.server}"
+           userid="${remote.user}"
+           password="${remote.pass}"
+      	   remotedir="/"
+           depends="no"
+      	   action="get"
+      	   verbose="yes">
+        <fileset dir="${downloads.dir}">
+           <include name="log/production-ppm.log" />
+           <include name="public_html/error_log" />
+        </fileset>
+      </ftp>
+   </target>
+     
+    <target name="prepare.db" description="Removes test data and gets database ready for tests.">
+        <exec executable="${db.dir}/prepare-tests.sh" />
+    </target>
+
+    <path id="lb.path">
+        <pathelement location="/usr/share/ant/lib/liquibase.jar" />
+    </path>
+    
+    <taskdef name="generateChangeLog"
+        classname="liquibase.integration.ant.GenerateChangeLogTask" 
+        classpathref="lb.path" />
+
+    <taskdef name="updateDatabase"
+        classname="liquibase.integration.ant.DatabaseUpdateTask" 
+        classpathref="lb.path" />
+
+    <taskdef name="rollbackDatabase"
+        classname="liquibase.integration.ant.DatabaseRollbackTask" 
+        classpathref="lb.path" />
+
+    <taskdef name="changeLogSync"
+        classname="liquibase.integration.ant.ChangeLogSyncTask" 
+        classpathref="lb.path" />
+
+    <target name="update.live.database">
+        <updateDatabase
+            changeLogFile="${db.dir}/changelog/ppm-master-changelog.xml"
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://10.15.11.144:3306/andyspeakmancouk_876109_db1"
+            username="uand_876109_0001"
+            password="u5p34k3r5" 
+            dropFirst="false"
+            classpathref="lb.path" />
+    </target>
+    
+    <target name="update.database" description="Utility task to test Liquibase integration.">
+        <!--
+        <generateChangeLog
+           outputFile="${db.dir}/changelog/db-changelog-1.0.xml"
+           driver="com.mysql.jdbc.Driver"
+           url="jdbc:mysql://89.238.149.68:3306/princes_ppm"
+           username="princes"
+           password="pr1nc35" 
+           classpathref="lb.path" />
+        <changeLogSync
+            changeLogFile="${db.dir}/changelog/db-changelog-1.0.xml"
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://89.238.149.68:3306/princes_ppm"
+            username="princes"
+            password="pr1nc35" 
+            classpathref="lb.path" />
+        <rollbackDatabase
+            changeLogFile="${db.dir}/changelog/ppm-master-changelog.xml"
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost:3306/princes_ppm"
+            username="princes"
+            password="pr1nc35"
+            rollbackdate="21/05/2012"
+            classpathref="lb.path" />
+       -->
+        <updateDatabase
+            changeLogFile="${db.dir}/changelog/ppm-master-changelog.xml"
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost:3306/princes_ppm"
+            username="princes"
+            password="pr1nc35" 
+            dropFirst="false"
+            classpathref="lb.path" />
+
+    </target>
+
+</project>

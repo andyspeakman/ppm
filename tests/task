@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>Task Tests</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Task Tests</td></tr>
+</thead><tbody>
+<tr>
+	<td>storeEval</td>
+	<td>var d = new Date(); var mday = d.getDate(); var mmonth = d.getMonth() + 1; var myear; if (navigator.appName == 'Microsoft Internet Explorer') {myear = d.getYear();} else {myear = d.getYear() + 1900;} if (mday.toString().length == 1) { mday = '0' + mday; } if (mmonth.toString().length == 1) { mmonth = '0' + mmonth; } todaysDate = mday + '/' + mmonth + '/' + myear;</td>
+	<td>currentDate</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>02/04/2011</td>
+	<td>testRequestedDate</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Log In</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Log In</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>Princes Park Mansions - Log In</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>email</td>
+	<td>testdirector@ppm.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>password</td>
+	<td>testdirector</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>Princes Park Mansions - Noticeboard</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Tasks</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>Princes Park Mansions - Tasks</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=addTask</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>Princes Park Mansions - Add Task</td>
+	<td></td>
+</tr>
+<!--Check that the date picker has put the default date in place:-->
+<tr>
+	<td>assertValue</td>
+	<td>date_requested</td>
+	<td>${currentDate}</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>date_completed</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>submit</td>
+	<td></td>
+</tr>
+<!--Check mandatory validation has worked:-->
+<tr>
+	<td>assertValue</td>
+	<td>date_requested</td>
+	<td>${currentDate}</td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>Princes Park Mansions - Add Task</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Value is required and can't be empty</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Please assign this task to somebody</td>
+	<td></td>
+</tr>
+<!--Add some values to test type validation:-->
+<tr>
+	<td>type</td>
+	<td>title</td>
+	<td>Test Task for Selenium</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>notes</td>
+	<td>Here is some sample text.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>priority</td>
+	<td>X</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>effort</td>
+	<td>Y</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>cost</td>
+	<td>Z</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>Princes Park Mansions - Add Task</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>'X' contains characters which are not digits; but only digits are allowed</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>'Y' contains characters which are not digits; but only digits are allowed</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>'Z' does not appear to be a float</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Please assign this task to somebody</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>priority</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>requested_by</td>
+	<td>One of the neighbours</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>assigned_to</td>
+	<td>label=Caretaker</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>effort</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>cost</td>
+	<td></td>
+</tr>
+<!--Change the requested date so we can check it doesn't come back as the current date:-->
+<tr>
+	<td>type</td>
+	<td>date_requested</td>
+	<td>${testRequestedDate}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>Princes Park Mansions - Tasks</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>Princes Park Mansions - Edit Task</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>date_requested</td>
+	<td>${testRequestedDate}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Log Out</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>Princes Park Mansions - Home</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

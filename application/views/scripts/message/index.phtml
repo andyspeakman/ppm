@@ -1,0 +1,51 @@
+<? $this->headTitle('Noticeboard'); ?>
+
+<?
+$ppm_session = new Zend_Session_Namespace('ppm');
+$registry = Zend_Registry::getInstance();
+$acl = $registry->acl;
+$u = $ppm_session->user;
+?>
+
+<h1>Noticeboard Messages</h1>
+
+<? if ($acl->isAllowed($u->getRole(), 'message', 'add')): ?>
+<button name="addMessage" class="btn btn-mini"
+   onclick="javascript:document.location='/message/add'">Add Message...</button>
+<? endif; ?>
+
+<div class="list">
+
+<?php if (count($this->entries) == 0): ?>
+    <div class="alert alert-warn">
+    <strong>Note:</strong> No messages found.
+    </div>
+<?php endif; ?>
+    
+<!-- Loop through the entries that were provided to us by the controller -->
+<?php foreach ($this->entries as $entry):?>
+
+<div class="row">
+    <div class="span12 ppm-message">
+        <p class="lead"><?php echo $this->escape($entry['title']); ?></p>
+        <?php echo nl2br($entry['notes']) ?>
+        <div>
+            <? if ($acl->isAllowed($u->getRole(), 'message', 'edit')): ?>
+                <a class="btn btn-mini" name="editMessage" title="Edit this message"
+                    href="<?= $this->url(array('controller' => 'message', 'action' => 'edit', 'id' => $entry['id'])) ?>">Edit</a>
+            <? endif; ?>
+            <? if ($acl->isAllowed($u->getRole(), 'message', 'expire')): ?>
+                <a class="btn btn-danger btn-mini" name="expireMessage" title="Remove this message"
+                    href="<?= $this->url(array('controller' => 'message', 'action' => 'expire', 'id' => $entry['id'])) ?>">Remove</a>
+            <? endif;  ?>
+        </div>
+    </div>
+</div>
+
+<?php endforeach;?>
+
+</div>
+
+<p>&nbsp;</p>
+<a href="#top" title="Return to the top of the page" class="page_nav"><i class="icon-arrow-up"></i>Back To Top</a>
+<p>&nbsp;</p>

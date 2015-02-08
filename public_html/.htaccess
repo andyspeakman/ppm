@@ -1,0 +1,19 @@
+#    Options +FollowSymlinks
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} !/maintenance.html$
+#RewriteCond %{REQUEST_URI} !/test/settings.php$
+#RewriteCond %{REQUEST_URI} !/images/building.jpg$
+#RewriteCond %{REQUEST_URI} !/css/bootstrap.css$
+#RewriteCond %{REMOTE_HOST} !^94\.0\.226\.176
+#RewriteRule $ /maintenance.html [R=302,L]
+
+SetEnv APPLICATION_ENVIRONMENT development
+
+# Zend MVC Rewrite rule:
+RewriteEngine On
+   
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ /index.php [NC,L]

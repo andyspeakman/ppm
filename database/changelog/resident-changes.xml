@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <changeSet author="andrewspeakman" id="20120623-1">
+        <createTable tableName="resident_list">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="email" remarks="Email address of resident." type="VARCHAR(50)"/>
+            <column name="flat" remarks="Foreign key to FLAT." type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>            
+            <column name="status" remarks="Foreign key to RESIDENT_STATUS." type="TINYINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="Y" name="e_contact" remarks="Y/N flag indicating if the resident is happy to receive information via email." type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" remarks="Residents password, stored in plain text (used if they have a site login)." type="VARCHAR(50)"/>
+            <column name="role" remarks="Residents role (used if they have a site login)." type="VARCHAR(15)"/>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_reslist_flat"
+            baseTableName="resident_list" baseColumnNames="flat"
+            referencedTableName="flat" referencedColumnNames="id" />
+
+        <addForeignKeyConstraint constraintName="fk_reslist_status"
+            baseTableName="resident_list" baseColumnNames="status"
+            referencedTableName="resident_status" referencedColumnNames="id" />
+
+    </changeSet>
+
+    <changeSet author="andrewspeakman" id="20120623-2">
+        <addColumn tableName="resident_list">
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="andrewspeakman" id="20120623-3">
+        <sql>
+            INSERT INTO resident_list (ID, NAME, EMAIL, FLAT, STATUS, E_CONTACT, PASSWORD, ROLE)
+            SELECT r.id, r.name, r.email, f.flat, f.status, r.e_contact, r.password, r.role
+              FROM resident r
+              JOIN flat_resident f on r.id = f.resident;
+        </sql>
+    </changeSet>
+
+    <changeSet author="andrewspeakman" id="20120623-4">
+        <dropTable tableName="flat_resident" />
+        <dropTable tableName="resident" />
+    </changeSet>
+
+</databaseChangeLog>

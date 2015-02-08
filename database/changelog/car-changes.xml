@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <changeSet author="andrewspeakman" id="20130327-1">
+        <createTable tableName="car_list">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="make" remarks="Make of the car." type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="model" remarks="Model of the car." type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="colour" remarks="Colour of the car." type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="registration" remarks="Registration of the car." type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="flat" remarks="Foreign key to FLAT." type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>            
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_carlist_flat"
+            baseTableName="car_list" baseColumnNames="flat"
+            referencedTableName="flat" referencedColumnNames="id" />
+
+    </changeSet>
+</databaseChangeLog>

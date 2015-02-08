@@ -1,0 +1,87 @@
+<? $this->headTitle('Add Work Record');
+   $this->headScript()->appendFile('/js/jquery-ui-1.8.7.custom.min.js', 'text/javascript');
+   $this->headLink()->appendStylesheet('/css/jquery-ui-1.8.7.custom.css', 'screen');
+?>
+
+<script>
+function fixDate(oldDate) {
+	dateComponents = oldDate.split('-');
+	return dateComponents[2] + '/' + dateComponents[1] + '/' + dateComponents[0];
+}
+
+$(function() {
+$.datepicker.setDefaults({
+   showOn: 'both',
+   buttonImageOnly: true,
+   buttonImage: '/images/calendar.gif',
+   buttonText: 'Calendar' });
+      
+  $( "#work_date" ).datepicker();
+  $( "#work_date" ).datepicker( "option", "dateFormat", "dd/mm/yyyy");
+  if ('<?= $this->form->getValue('work_date'); ?>' == '') {
+    $( "#work_date" ).datepicker("setDate", "+0");
+  } else {
+    $( "#work_date" ).datepicker("setDate", fixDate('<?= $this->form->getValue('work_date'); ?>'));
+  }
+});
+</script>
+
+<h1>Add Work Record</h1>
+
+<form enctype="application/x-www-form-urlencoded" method="post"
+    action="<?= $this->form->getAction(); ?>"
+    class="form-horizontal"
+    novalidate>
+
+<fieldset>
+   <input type="hidden" name="id" value="<?= $this->form->getValue('id'); ?>" id="id" />
+
+    <div class="control-group <? if ($this->form->work_date->hasErrors()) echo 'error'; ?>">
+        <label for="work_date" class="control-label">Date:</label>
+        <div class="controls">
+            <input type="text" name="work_date" id="work_date" size="10" maxlength="10"
+                value="<?= $this->form->getValue('work_date'); ?>" class="input-mini" />
+            <?php
+            foreach ($this->form->work_date->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+            <p class="help-block"><?= $this->form->work_date->getDescription() ?></p>
+        </div>
+   </div>
+
+    <div class="control-group <? if ($this->form->notes->hasErrors()) echo 'error'; ?>">
+        <label for="notes" class="control-label">Notes:</label>
+        <div class="controls">
+            <textarea name="notes" id="notes" rows="10" cols="50"><?= $this->form->getValue('notes'); ?></textarea>
+            <?php
+            foreach ($this->form->notes->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+            <p class="help-block"><?= $this->form->notes->getDescription() ?></p>
+        </div>
+   </div>
+
+    <div class="control-group <? if ($this->form->hours->hasErrors()) echo 'error'; ?>">
+        <label for="hours" class="control-label">Hours:</label>
+        <div class="controls">
+            <input type="text" name="hours" id="hours" size="5" maxlength="2"
+                value="<?= $this->form->getValue('hours'); ?>" />
+            <?php
+            foreach ($this->form->hours->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+            <p class="help-block"><?= $this->form->hours->getDescription() ?></p>
+        </div>
+   </div>
+
+   <div class="form-actions">
+      <input type="submit" name="submit" id="submit" value="Save" class="btn btn-primary" />
+      <input type="button" name="cancel" id="cancel" value="Cancel" onclick="location.href='/workrecord';" class="btn" />
+   </div>
+
+</fieldset>
+</form>
+

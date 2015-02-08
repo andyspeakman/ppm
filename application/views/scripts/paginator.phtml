@@ -1,0 +1,42 @@
+<!--
+See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
+-->
+<?php if ($this->pageCount): ?>
+<div class="pagination pagination-right">
+    <ul>
+
+   <!-- Previous page link -->
+   <?php if (isset($this->previous)): ?>
+      <li><a class="previous" href="<?php echo $this->url(array_merge($_POST, array('page' => $this->previous))); ?>">
+         Previous
+      </a></li>
+   <?php endif; ?>
+    
+   <!-- Numbered page links -->
+   <?php foreach ($this->pagesInRange as $page): ?>
+      <?php if ($page != $this->current): ?>
+         <li><a href="<?php echo $this->url(array_merge($_POST, array('page' => $page))); ?>">
+            <?php echo $page; ?>
+         </a></li>
+      <?php else: ?>
+         <li class="active"><a><?php echo $page; ?></a></li>
+      <?php endif; ?>
+   <?php endforeach; ?>
+   </span>
+    
+   <!-- Next page link -->
+   <?php if (isset($this->next)): ?>
+      <li><a class="next" href="<?php echo $this->url(array_merge($_POST, array('page' => $this->next))); ?>">
+         Next
+      </a></li>
+   <?php endif; ?>
+   
+   </ul>
+</div>
+
+   <span class="paging-information">
+      Showing <?php echo $this->firstItemNumber ?>
+      to <?php echo $this->lastItemNumber ?>
+      of <?php echo $this->totalItemCount ?> entries
+   </span>
+<?php endif; ?>

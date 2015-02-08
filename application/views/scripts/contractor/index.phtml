@@ -1,0 +1,117 @@
+<? $this->headTitle('Contractor List'); ?>
+
+<?
+$ppm_session = new Zend_Session_Namespace('ppm');
+$registry = Zend_Registry::getInstance();
+$acl = $registry->acl;
+$u = $ppm_session->user;
+$columnCount = 0;
+$currentRecord = 0;
+$newContractorType = true;
+?>
+
+<a name="top"></a><h1>Contractor List</h1>
+
+<p>The list below is made up of contractors that have been hired by PPMMCL
+to perform work on the building and grounds. If they are in the list they can
+be considered approved.</p>
+
+<? if ($acl->isAllowed($u->getRole(), 'contractor', 'add')): ?>
+<div class="list-action-buttons">
+   <button name="addContractor" class="btn btn-mini"
+   onclick="javascript:document.location='/contractor/add'">Add Contractor...</button>
+</div>
+<? endif; ?>
+
+<div class="list">
+
+<?php if (count($this->entries) == 0): ?>
+    <div class="alert alert-warn">
+    <strong>Note:</strong> No contractors found.
+    </div>
+<?php else: ?>
+
+   <!-- Loop through the entries that were provided to us by the controller -->
+   <?php foreach ($this->entries as $entry):?>
+      
+      <?php
+      if ($this->placeholder('contractor')->type != $entry['type']) {
+         $this->placeholder('contractor')->type = $entry['type'];
+         $newContractorType = true;
+         $columnCount = 0;
+      } else {
+          $newContractorType = false;
+      }
+      ?>
+        
+        <?php if ($newContractorType): ?>
+            <?php if ($currentRecord != 0): ?>
+                </div> <!-- row finisher for new contractor -->
+            <?php endif; ?>
+            <div class="row contractor-type">
+            <p class="lead span12"><?php echo $this->escape($entry['type']) ?></p>
+            </div>
+        <?php endif; ?>
+        <?php if ($newContractorType || $columnCount == 0): ?>
+            <div class="row">
+        <?php endif; ?>
+
+      <div class="contractor span4">
+         <p>
+         <strong><?php echo $this->escape($entry['company_name']) ?></strong>
+         </p>
+         
+         <?php if ($entry['website'] != ''): ?>
+         <div class="website">
+            <a class="extlink" target="_blank" href="<?php echo $entry['website'] ?>"><?php echo $entry['website'] ?></a>
+         </div>
+         <?php endif; ?>
+         <div class="telno">
+         <?php echo $this->escape($entry['company_telno']) ?>
+         </div>
+      
+         <div class="contact">
+         <?php if ($entry['contact_name'] != ''): ?>
+            <?php echo $this->escape($entry['contact_name']) ?>
+         <?php endif; ?>
+      
+         <?php if ($entry['contact_telno'] != ''): ?>
+            <?php echo $this->escape($entry['contact_telno']) ?>
+         <?php endif; ?>
+         </div>
+         
+         <?php if ($entry['notes'] != ''): ?>
+         <div class="notes">
+            <?php echo $this->escape($entry['notes']); ?>
+         </div>
+         <?php endif; ?>
+   
+      <? if ($acl->isAllowed($u->getRole(), 'contractor', 'edit')): ?>
+         <a name="editContractor" class="btn btn-mini" title="Edit this contractor&#39;s details"
+            href="<?= $this->url(array('controller' => 'contractor', 'action' => 'edit', 'id' => $entry['id'], 'name' => $entry['company_name'])) ?>">Edit</a>
+      <? endif; ?>
+   
+      <? if ($acl->isAllowed($u->getRole(), 'contractor', 'delete')): ?>
+         <a name="deleteContractor" class="btn btn-mini btn-danger" title="Delete this contractor&#39;s details"
+            href="<?= $this->url(array('controller' => 'contractor', 'action' => 'delete', 'id' => $entry['id'], 'name' => $entry['company_name'])) ?>">Delete</a>
+      <? endif; ?>
+      </div> <!-- contractor -->
+      
+      <?php
+          $currentRecord++;
+          $columnCount++;
+          if ($columnCount == 3) {
+              $columnCount = 0;
+              echo '</div> <!-- end of full row -->';
+          }
+      ?>
+   <?php endforeach;?>
+   
+   </div>
+
+<?php endif; ?>
+
+</div>
+
+<a href="#top" title="Return to the top of the page" class="page_nav"><i class="icon-arrow-up"></i>Back To Top</a>
+<p>&nbsp;</p>

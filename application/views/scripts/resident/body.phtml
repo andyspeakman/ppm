@@ -1,0 +1,131 @@
+<form enctype="application/x-www-form-urlencoded" method="post"
+    action="<?= $this->form->getAction(); ?>"
+    class="form-horizontal"
+    novalidate>
+
+    <input type="hidden" name="id" value="<?= $this->form->getValue('id'); ?>" id="id" />
+   
+    <div class="control-group <? if ($this->form->flat->hasErrors()) echo 'error'; ?>">
+        <label for="flat" class="control-label">Flat:</label>
+        <div class="controls">
+            <select name="flat" id="flat" autofocus class="span2">
+                <option <?php if ("0" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="0">Select...</option>
+                <option <?php if ("1" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="1">1</option>
+                <option <?php if ("1A" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="1A">1A</option>
+                <option <?php if ("1B" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="1B">1B</option>
+                <option <?php if ("2" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="2">2</option>
+                <option <?php if ("2B" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="2B">2B</option>
+                <option <?php if ("3" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="3">3</option>
+                <option <?php if ("4" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="4">4</option>
+                <option <?php if ("4A" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="4A">4A</option>
+                <option <?php if ("5" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="5">5</option>
+                <option <?php if ("6" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="6">6</option>
+                <option <?php if ("7" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="7">7</option>
+                <option <?php if ("7A" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="7A">7A</option>
+                <option <?php if ("7B" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="7B">7B</option>
+                <option <?php if ("8" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="8">8</option>
+                <option <?php if ("9" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="9">9</option>
+                <option <?php if ("10" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="10">10</option>
+                <option <?php if ("11" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="11">11</option>
+                <option <?php if ("12" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="12">12</option>
+                <option <?php if ("14" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="14">14</option>
+                <option <?php if ("14A" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="14A">14A</option>
+                <option <?php if ("15" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="15">15</option>
+                <option <?php if ("16" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="16">16</option>
+                <option <?php if ("17" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="17">17</option>
+                <option <?php if ("18" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="18">18</option>
+                <option <?php if ("19" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="19">19</option>
+                <option <?php if ("20" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="20">20</option>
+                <option <?php if ("21" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="21">21</option>
+                <option <?php if ("22" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="22">22</option>
+                <option <?php if ("23" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="23">23</option>
+                <option <?php if ("24" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="24">24</option>
+                <option <?php if ("25" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="25">25</option>
+                <option <?php if ("26" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="26">26</option>
+                <option <?php if ("27" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="27">27</option>
+                <option <?php if ("28" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="28">28</option>
+                <option <?php if ("29" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="29">29</option>
+                <option <?php if ("30" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="30">30</option>
+                <option <?php if ("30A" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="30A">30A</option>
+                <option <?php if ("30B" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="30B">30B</option>
+                <option <?php if ("31" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="31">31</option>
+                <option <?php if ("31A" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="31A">31A</option>
+                <option <?php if ("32" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="32">32</option>
+                <option <?php if ("33" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="33">33</option>
+                <option <?php if ("34" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="34">34</option>
+                <option <?php if ("35" == $this->form->getValue('flat')): ?>selected<?php endif; ?> value="35">35</option>
+            </select>
+            <?php
+            foreach ($this->form->flat->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+        </div>
+    </div>
+
+    <div class="control-group <? if ($this->form->name->hasErrors()) echo 'error'; ?>">
+        <label for="name" class="control-label">Resident Name:</label>
+        <div class="controls">
+            <input type="text" name="name" id="name" size="50" maxlength="50" required
+                value="<?= $this->form->getValue('name'); ?>" />
+            <?php
+            foreach ($this->form->name->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+        </div>
+   </div>
+
+    <div class="control-group <? if ($this->form->status->hasErrors()) echo 'error'; ?>">
+        <label for="status" class="control-label">Status:</label>
+        <div class="controls">
+            <select name="status" id="status" class="span2">
+                <option <?php if ("0" == $this->form->getValue('status')): ?>selected<?php endif; ?> value="0">Select...</option>
+                <option <?php if ("1" == $this->form->getValue('status')): ?>selected<?php endif; ?> value="1">Owner</option>
+                <option <?php if ("2" == $this->form->getValue('status')): ?>selected<?php endif; ?> value="2">Tennant</option>
+                <option <?php if ("3" == $this->form->getValue('status')): ?>selected<?php endif; ?> value="3">Resident</option>
+            </select>
+            <?php
+            foreach ($this->form->status->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+        </div>
+    </div>
+
+    <div class="control-group <? if ($this->form->role->hasErrors()) echo 'error'; ?>">
+        <label for="role" class="control-label">Role:</label>
+        <div class="controls">
+            <select name="role" id="role" class="span2">
+                <option <?php if ("shareholder" == $this->form->getValue('role')): ?>selected<?php endif; ?> value="shareholder">Shareholder</option>
+                <option <?php if ("caretaker" == $this->form->getValue('role')): ?>selected<?php endif; ?> value="caretaker">Caretaker</option>
+                <option <?php if ("director" == $this->form->getValue('role')): ?>selected<?php endif; ?> value="director">Director</option>
+                <option <?php if ("admin" == $this->form->getValue('role')): ?>selected<?php endif; ?> value="admin">Admin</option>
+            </select>
+            <?php
+            foreach ($this->form->role->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+        </div>
+    </div>
+
+    <div class="control-group <? if ($this->form->email->hasErrors()) echo 'error'; ?>">
+        <label for="email" class="control-label">Email:</label>
+        <div class="controls">
+            <input type="email" name="email" id="email" size="50" maxlength="50" required
+                value="<?= $this->form->getValue('email'); ?>" />
+            <?php
+            foreach ($this->form->email->getMessages() as $msg) {
+                echo '<span class="help-inline">' . $msg . '</span>';
+            }
+            ?>
+        </div>
+   </div>
+
+    <div class="form-actions">
+        <input type="submit" name="submit" id="submit" value="Save" class="btn btn-primary" />
+        <input type="button" name="cancel" id="cancel" value="Cancel" onclick="location.href='/resident';" class="btn" />
+    </div>
+
+</form>
