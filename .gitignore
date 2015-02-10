@@ -5,10 +5,6 @@ ppm.properties
 
 library/Zend
 
-log/access.log
-
-log/development-ppm.log
-
-log/error.log
+log
 
 application/config/config.xml
