@@ -90,7 +90,9 @@
         </fileset>
       </ftp>
    </target>
-     
+
+  <!--
+    
     <target name="prepare.db" description="Removes test data and gets database ready for tests.">
         <exec executable="${db.dir}/prepare-tests.sh" />
     </target>
@@ -127,7 +129,6 @@
     </target>
     
     <target name="update.database" description="Utility task to test Liquibase integration.">
-        <!--
         <generateChangeLog
            outputFile="${db.dir}/changelog/db-changelog-1.0.xml"
            driver="com.mysql.jdbc.Driver"
@@ -150,7 +151,7 @@
             password="pr1nc35"
             rollbackdate="21/05/2012"
             classpathref="lb.path" />
-       -->
+
         <updateDatabase
             changeLogFile="${db.dir}/changelog/ppm-master-changelog.xml"
             driver="com.mysql.jdbc.Driver"
@@ -161,5 +162,5 @@
             classpathref="lb.path" />
 
     </target>
-
+       -->
 </project>
