@@ -80,12 +80,12 @@
       <ftp server="${remote.server}"
            userid="${remote.user}"
            password="${remote.pass}"
-      	   remotedir="/"
+      	   remotedir="/log"
            depends="no"
       	   action="get"
       	   verbose="yes">
-        <fileset dir="${downloads.dir}">
-           <include name="log/production-ppm.log" />
+        <fileset dir="${local.dir}/log">
+           <include name="production-ppm.log" />
            <include name="public_html/error_log" />
         </fileset>
       </ftp>
