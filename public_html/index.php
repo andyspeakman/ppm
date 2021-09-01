@@ -2,15 +2,14 @@
 // public/index.php
 
 defined('APPLICATION_PATH')
-    || define('APPLICATION_PATH',
-        realpath(dirname(__FILE__) . '/../application'));
+    || define('APPLICATION_PATH', '/home/bitnami/application');
 
 defined('APPLICATION_ENVIRONMENT')
     || define('APPLICATION_ENVIRONMENT',
         (getenv('APPLICATION_ENVIRONMENT') ? getenv('APPLICATION_ENVIRONMENT') : 'production'));
 
 set_include_path(implode(PATH_SEPARATOR, array(
-    dirname(dirname(__FILE__)) . '/library',
+    '/home/bitnami/library',
         get_include_path()
 )));
 
