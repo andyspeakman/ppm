@@ -8,7 +8,6 @@ class Lightman_Managers_Task
    {
       require_once APPLICATION_PATH . '/models/DbTable/Task.php';
       $this->_model = new Model_DbTable_Task();
-      $user = Lightman_Managers_User::getUser();
    }
    
    public function add($taskData, $userId)
@@ -84,7 +83,6 @@ class Lightman_Managers_Task
    public function fetchAssignees()
    {
       $db = Zend_Registry::get('dbAdapter');
-      $assigneeRoles = array('director', 'shareholder');
       $sql = 'SELECT r.id, r.name 
                 FROM resident_list r
                WHERE r.role IN ("director","caretaker")

@@ -8,3 +8,5 @@ library/Zend
 log
 
 application/config/config.xml
+
+.DS_Store
